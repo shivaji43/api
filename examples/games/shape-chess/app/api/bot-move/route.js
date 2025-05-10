@@ -42,6 +42,10 @@ export async function POST(request) {
       model: `shapesinc/${shape_username}`,
       messages: [{ role: "user", content: prompt }],
       max_tokens: 200,
+      extraHeaders: {
+        "X-User-Id": "chess-player",
+        "X-Channel-Id": "chess-game"
+      }
     });
 
     const text = resp.choices[0]?.message.content;
@@ -76,4 +80,4 @@ export async function POST(request) {
       headers: { "Content-Type": "application/json" },
     });
   }
-      }
+}

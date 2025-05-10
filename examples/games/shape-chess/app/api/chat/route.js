@@ -40,6 +40,10 @@ export async function POST(request) {
       model: `shapesinc/${shape_username}`,
       messages: [{ role: "user", content: prompt }],
       max_tokens: 150,
+      extraHeaders: {
+        "X-User-Id": "chess-player",
+        "X-Channel-Id": "chess-chat"
+      }
     });
 
     const reply = resp.choices[0]?.message.content;

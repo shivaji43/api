@@ -50,7 +50,9 @@ $ch = curl_init("https://api.shapes.inc/v1/chat/completions");
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($ch, CURLOPT_HTTPHEADER, [
     "Authorization: Bearer $apiKey",
-    "Content-Type: application/json"
+    "Content-Type: application/json",
+    "X-User-Id: php-example-user",
+    "X-Channel-Id: php-example-channel"
 ]);
 curl_setopt($ch, CURLOPT_POST, true);
 curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($payload));

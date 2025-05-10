@@ -481,7 +481,9 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
         # Generate response using Shapes Inc LLM through OpenAI compatibility layer
         # No system prompt required as backend handles it
         ai_response = shapes_client.generate_response(
-            conversation_history=conversation_history
+            conversation_history=conversation_history,
+            user_id=str(user_id),
+            channel_id=conversation_id
         )
         
         # Save the assistant response to conversation history

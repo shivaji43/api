@@ -130,6 +130,10 @@ async function main() {
     const resp = await auth_shapes_client.chat.completions.create({
       model: `shapesinc/${shape_username}`,
       messages: messages,
+      extraHeaders: {
+        "X-User-Id": "js-example-user",
+        "X-Channel-Id": "js-example-channel"
+      }
     });
 
     console.log("Raw response:", resp);

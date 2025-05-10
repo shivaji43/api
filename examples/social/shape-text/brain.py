@@ -82,11 +82,8 @@ class Brain:
 
         # only do this if it's a channel
         if x_channel_id:
-            headers[
-                "X-Channel-Id"
-            ] = x_channel_id  # If not provided, all requests will be attributed to
-            # the user. This will cause unexpected behavior if interacting with multiple users
-            # in a group.
+            headers["X-Channel-Id"] = x_channel_id  # Identifies the specific channel or conversation context for this message.
+            # If not provided, the shape will think everything is coming from a big unified channel
 
         response = self.aclient.chat.completions.create(
             model=f"shapesinc/{self.shape_username}",

@@ -57,13 +57,13 @@ async def run():
         # key for multiple users. For production use cases, either provide this header or obtain a
         # user-specific API key for each user.
         if args.user_id:
-            extra_headers["X-User-ID"] = args.user_id
+            extra_headers["X-User-Id"] = args.user_id
 
         # X-Channel-ID header
         # Identifies the specific channel or conversation context for this message.
         # If not provided, the shape will think everything is coming from a big unified channel
         if args.channel_id:
-            extra_headers["X-Channel-ID"] = args.channel_id
+            extra_headers["X-Channel-Id"] = args.channel_id
 
         # Create the client with the shape API key and the Shapes API base URL
         aclient_shape = AsyncOpenAI(

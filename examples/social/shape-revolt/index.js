@@ -227,7 +227,11 @@ async function startBot() {
                   { role: "user", content: content }
                 ],
                 temperature: 0.7,
-                max_tokens: 1000
+                max_tokens: 1000,
+                extraHeaders: {
+                  "X-User-Id": message.author,
+                  "X-Channel-Id": message.channel
+                }
               });
               
               // Extract response

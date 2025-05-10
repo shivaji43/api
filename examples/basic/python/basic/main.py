@@ -57,6 +57,10 @@ async def run():
         resp: ChatCompletion = await aclient_shape.chat.completions.create(
             model=f"shapesinc/{shape_username}",
             messages=messages,
+            extra_headers={
+                "X-User-Id": "python-basic-user",
+                "X-Channel-Id": "python-basic-channel"
+            }
         )
         print(f"Raw response: {resp}\n")
 

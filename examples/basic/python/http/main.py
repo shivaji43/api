@@ -31,6 +31,8 @@ async def run():
                         headers={
                             "Authorization": f"Bearer {shape_api_key}",
                             "Content-Type": "application/json",
+                            "X-User-Id": "python-http-user",
+                            "X-Channel-Id": "python-http-channel"
                         },
                         json={
                             "model": f"shapesinc/{shape_username}",

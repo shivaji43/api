@@ -99,6 +99,7 @@ class Brain:
                 # the user who owns the API key. This will cause unexpected behavior if you are using the same API
                 # key for multiple users. For production use cases, either provide this header or obtain a
                 # user-specific API key for each user.
+                "X-Channel-Id": f"mail-{self.user_id}",  # Using a mail-specific channel ID
             },
         )
         email_reply = response.choices[0].message.content.strip()

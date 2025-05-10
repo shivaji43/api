@@ -125,6 +125,10 @@ export function App() {
             const completion = await openai.chat.completions.create({
                 model: 'shapesinc/' + import.meta.env.VITE_SHAPESINC_SHAPE_USERNAME,
                 messages: [{ role: 'user', content: transcript }],
+                extraHeaders: {
+                    "X-User-Id": "voice-user",
+                    "X-Channel-Id": "voice-conversation"
+                }
             });
             const response = completion.choices[0]?.message?.content || 'No response from AI';
             setAiResponse(response);

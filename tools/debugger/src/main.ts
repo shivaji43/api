@@ -165,9 +165,10 @@ function prettyPrintRequest(req: http.IncomingMessage, bodyBuf: Buffer): void {
  */
 function isStreamingResponse(res: http.IncomingMessage): boolean {
   const contentType = res.headers['content-type'] || '';
-  return contentType.includes('text/event-stream') ||
-         contentType.includes('application/x-ndjson') ||
-         res.headers['transfer-encoding'] === 'chunked';
+
+  // Chunked transfer encoding alone doesn't always indicate a proper stream
+  return contentType.includes('text/event-stream') && res.headers['transfer-encoding'] === 'chunked' ||
+    contentType.includes('application/x-ndjson') && res.headers['transfer-encoding'] === 'chunked';
 }
 
 /**
@@ -265,6 +266,20 @@ function prettyPrintResponseBody(res: http.IncomingMessage, bodyBuf: Buffer): vo
     } catch (err) {
       console.log(chalk.red('Failed to decompress gzipped response:'), (err as Error).message);
       console.log(chalk.gray('Raw gzipped data length:'), bodyBuf.length);
+    }
+  } else if (contentEncoding === 'zstd') {
+    try {
+      const decompressed = zlib.zstdDecompressSync(bodyBuf);
+      const str = decompressed.toString('utf-8');
+      try {
+        const obj = JSON.parse(str);
+        prettyPrintJson(obj, { isResponse: true });
+      } catch {
+        console.log(str);
+      }
+    } catch (err) {
+      console.log(chalk.red('Failed to decompress zstd response:'), (err as Error).message);
+      console.log(chalk.gray('Raw zstd data length:'), bodyBuf.length);
     }
   } else {
     const str = bodyBuf.toString('utf8');
